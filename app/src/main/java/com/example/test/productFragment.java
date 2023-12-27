@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class productFragment extends Fragment {
@@ -33,13 +34,17 @@ public class productFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Bundle b = new Bundle();
-                androidx.fragment.app.ListFragment f= new androidx.fragment.app.ListFragment();
+                ListFragment f= new ListFragment();
                 f.setArguments(b);
                 if(name.length()>0 && price.length()>0){
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.listfragment,f).commit();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.listfragment,f).addToBackStack(null).commit();
                     myDatabaseHelper.addproduct(name.getText().toString(), Integer.parseInt(price.getText().toString()));
+                    name.setText("");
+                    price.setText("");
                 }
-
+                else {
+                    Toast.makeText(requireActivity(), "Enter Name or Price", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         return view;
