@@ -24,20 +24,15 @@ public class ListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_list, container, false);
         myDatabaseHelper1 = new MyDatabaseHelper(requireActivity());
-        t=view.findViewById(R.id.Teblelayout);
         Cursor cursor = myDatabaseHelper1.readAllData();
-
-        Bundle bundle = getArguments();
-        if(bundle != null){
-            int n = cursor.getCount();
-            cursor.moveToFirst();
-
-            for (int i = 0; i < n; i++) {
-                String name = cursor.getString(1);
-                int price = cursor.getInt(2);
-                addTableRow(name,price);
-                cursor.moveToNext();
-            }
+        int n = cursor.getCount();
+        cursor.moveToFirst();
+        t=view.findViewById(R.id.Teblelayout);
+        for (int i = 0; i < n; i++) {
+            String name = cursor.getString(1);
+            int price = cursor.getInt(2);
+            addTableRow(name,price);
+            cursor.moveToNext();
         }
         return view;
     }
@@ -79,20 +74,7 @@ public class ListFragment extends Fragment {
         t.addView(row);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Cursor cursor = myDatabaseHelper1.readAllData();
-        int n = cursor.getCount();
-        cursor.moveToFirst();
 
-        for (int i = 0; i < n; i++) {
-            String name = cursor.getString(1);
-            int price = cursor.getInt(2);
-            addTableRow(name,price);
-            cursor.moveToNext();
-        }
-    }
 
     public String DownRow(String name)
     {

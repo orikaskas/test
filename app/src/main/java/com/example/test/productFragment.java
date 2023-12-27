@@ -33,9 +33,7 @@ public class productFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle b = new Bundle();
                 ListFragment f= new ListFragment();
-                f.setArguments(b);
                 if(name.length()>0 && price.length()>0){
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.listfragment,f).addToBackStack(null).commit();
                     myDatabaseHelper.addproduct(name.getText().toString(), Integer.parseInt(price.getText().toString()));
