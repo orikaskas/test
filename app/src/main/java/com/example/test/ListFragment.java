@@ -26,6 +26,7 @@ public class ListFragment extends Fragment  {
     Button buttonUpdate;
     Cursor cursor;
     private Button buttonDelete;
+    int n2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,10 @@ public class ListFragment extends Fragment  {
                 tvPrice.setText(String.valueOf(price));
             }
             else {
-                t.removeView(t.findViewWithTag(i));
+                for (int j = 0; j < n2; j++) {
+                    t.removeView(t.findViewWithTag(j+i));
+                }
+
             }
         } else{
             TableRow row = new TableRow(requireActivity());
@@ -125,8 +129,11 @@ public class ListFragment extends Fragment  {
             buttonDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    myDatabaseHelper1.deleteOneRow(String.valueOf(i));
-                    addTableRow("",-100,i);
+                    n2 = cursor.getCount();
+                    cursor.moveToFirst();
+                    int l = Integer.parseInt(cursor.getString(0));
+                    myDatabaseHelper1.deleteAllData();
+                    addTableRow("",-100,l);
                 }
             });
         }
