@@ -72,13 +72,24 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_PRODUCT, product);
         cv.put(COLUMN_PRICE, price);
 
-        long result = db.update(TABLE_NAME, cv, "_id=?", new String[]{row_id});
+        long result = db.update(TABLE_NAME, cv,  COLUMN_ID+" =?", new String[]{row_id});
         if(result == -1){
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
         }else {
             Toast.makeText(context, "Updated Successfully!", Toast.LENGTH_SHORT).show();
         }
 
+    }
+    void deleteOneRaw(String row_id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME,COLUMN_ID+" = "+row_id,null);
+        long result = db.delete(TABLE_NAME,COLUMN_ID+" =?",new String[]{row_id});
+        if(result == -1){
+            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(context, "Delete Successfully!", Toast.LENGTH_SHORT).show();
+        }
+        db.close();
     }
     void deleteAllData(){
         SQLiteDatabase db = this.getWritableDatabase();
