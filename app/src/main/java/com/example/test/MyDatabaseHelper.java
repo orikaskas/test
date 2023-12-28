@@ -80,9 +80,8 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         }
 
     }
-    void deleteOneRaw(String row_id){
+    void deleteOneRow(String row_id){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NAME,COLUMN_ID+" = "+row_id,null);
         long result = db.delete(TABLE_NAME,COLUMN_ID+" =?",new String[]{row_id});
         if(result == -1){
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();

@@ -56,17 +56,20 @@ public class ListFragment extends Fragment  {
         TableRow exist = t.findViewWithTag(i);
         if(exist != null)
         {
-            TextView tvName = exist.findViewWithTag("name");
-            TextView tvPrice = exist.findViewWithTag("price");
-            if (name.length() > 10) {
-                tvName.setText(DownRow(name));
-            } else {
-                tvName.setText(name);
+            if(price !=-100){
+                TextView tvName = exist.findViewWithTag("name");
+                TextView tvPrice = exist.findViewWithTag("price");
+                if (name.length() > 10) {
+                    tvName.setText(DownRow(name));
+                } else {
+                    tvName.setText(name);
+                }
+                tvPrice.setText(String.valueOf(price));
             }
-            tvPrice.setText(String.valueOf(price));
-
-        }
-        else{
+            else {
+                t.removeView(t.findViewWithTag(i));
+            }
+        } else{
             TableRow row = new TableRow(requireActivity());
             row.setTag(i);
             TableRow.LayoutParams rowp = new TableRow.LayoutParams(-2, -2);
@@ -108,7 +111,6 @@ public class ListFragment extends Fragment  {
             buttonDelete.setLayoutParams(ll);
             buttonDelete.setText("מחיקה");
 
-
             buttonUpdate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -123,8 +125,8 @@ public class ListFragment extends Fragment  {
             buttonDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    myDatabaseHelper1.deleteAllData();
-
+                    myDatabaseHelper1.deleteOneRow(String.valueOf(i));
+                    addTableRow("",-100,i);
                 }
             });
         }
